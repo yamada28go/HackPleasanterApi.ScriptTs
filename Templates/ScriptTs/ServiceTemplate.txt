@@ -1,0 +1,27 @@
+﻿
+@{
+//コード生成に必要な一時変数をまとめて定義する
+
+  // クラス名
+  string TargetClassName = Model.TemplateFilesConfig.HeadPrefix + Model.SiteDefinition.SiteVariableName + Model.TemplateFilesConfig.EndPrefix;
+
+
+  // --- サービスが対象としているモデルクラス名を指定する
+
+  // クラス名
+  var ModelTemplateFilesConfig = Model.AllTemplateFilesConfig["Model"];
+
+  // モデルクラス名称
+  string ModelClassName = ModelTemplateFilesConfig.HeadPrefix + Model.SiteDefinition.SiteVariableName + ModelTemplateFilesConfig.EndPrefix;
+
+  // ユーザー拡張要素が定義されたクラス名
+  string ExtensionElementsClassName = ModelClassName + "ExtensionElements"; 
+
+}
+export class @Raw(TargetClassName) extends APIServiceBase<  @Raw(ModelClassName)  > {
+
+
+  override makeItemType(_rawData: ResponseDataItems):  @Raw(ModelClassName) {
+    return new  @Raw(ModelClassName) (_rawData);
+  }
+}
