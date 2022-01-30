@@ -10,16 +10,13 @@
 
 export class @Raw(TargetClassName) {
   public constructor(public _rawData: ResponseDataItems) {
-    // if( null == _rawData ) {
-    //   this._rawData = {}
-    // }
   }
 
             @* ClassHashの出力定義 *@
             @foreach (var item in Model.ClassifiedInterface.ClassHash) {
 
 <text>
-                    get </text> @Raw(item.VariableName) <text> (): string
+                    get </text> @Raw(item.VariableName) <text> (): string | null |undefined
                     {
                         </text>
                         <text>
@@ -29,7 +26,7 @@ export class @Raw(TargetClassName) {
 
 <text>
 
-                    set </text> @Raw(item.VariableName) <text> (value: string) {
+                    set </text> @Raw(item.VariableName) <text> (value: string | null |undefined) {
 
                                                 </text>
                         <text>
@@ -44,7 +41,7 @@ export class @Raw(TargetClassName) {
             @foreach (var item in Model.ClassifiedInterface.NumHash) {
 
 <text>
-                    get </text> @Raw(item.VariableName) <text> (): number
+                    get </text> @Raw(item.VariableName) <text> (): number| null |undefined
                     {
                         </text>
                         <text>
@@ -54,7 +51,7 @@ export class @Raw(TargetClassName) {
 
 <text>
 
-                    set </text> @Raw(item.VariableName) <text> (value: number) {
+                    set </text> @Raw(item.VariableName) <text> (value: number| null |undefined) {
 
                                                 </text>
                         <text>
@@ -69,7 +66,7 @@ export class @Raw(TargetClassName) {
             @foreach (var item in Model.ClassifiedInterface.DateHash) {
 
 <text>
-                    get </text> @Raw(item.VariableName)<text>_raw (): string
+                    get </text> @Raw(item.VariableName)<text>_raw (): string| null |undefined
                     {
                         </text>
                         <text>
@@ -79,7 +76,7 @@ export class @Raw(TargetClassName) {
 
 <text>
 
-                    set </text> @Raw(item.VariableName)<text>_raw (value: string) {
+                    set </text> @Raw(item.VariableName)<text>_raw (value: string| null |undefined) {
 
                                                 </text>
                         <text>
@@ -97,9 +94,9 @@ export class @Raw(TargetClassName) {
                     {
                         </text>
                         <text>
-                        const const data =  this._rawData?.@(item.ColumnName);
+                        const data =  this._rawData?.@(item.ColumnName);
                         if (null !== data) {
-                        return new PleasanterDate(data);
+                        return new PleasanterDate(data!);
                         }
 
                         return null;
@@ -109,11 +106,15 @@ export class @Raw(TargetClassName) {
 
 <text>
 
-                    set </text> @Raw(item.VariableName)<text> (value: string) {
+                    set </text> @Raw(item.VariableName)<text> (value: PleasanterDate | null) {
 
                                                 </text>
                         <text>
-                            if (null !== value) this._rawData.@(item.ColumnName) = value.getPleasanterDateString();
+                            if (null !== value) {
+                                 this._rawData.@(item.ColumnName) = value.getPleasanterDateString();
+                            }else{
+                                this._rawData.@(item.ColumnName) = null;
+                            }
                     }
                             </text>
 
@@ -124,7 +125,7 @@ export class @Raw(TargetClassName) {
             @foreach (var item in Model.ClassifiedInterface.CheckHash) {
 
 <text>
-                    get </text> @Raw(item.VariableName) <text> (): boolean
+                    get </text> @Raw(item.VariableName) <text> (): boolean| null |undefined
                     {
                         </text>
                         <text>
@@ -134,7 +135,7 @@ export class @Raw(TargetClassName) {
 
 <text>
 
-                    set </text> @Raw(item.VariableName) <text> (value: boolean) {
+                    set </text> @Raw(item.VariableName) <text> (value: boolean| null |undefined) {
 
                                                 </text>
                         <text>
