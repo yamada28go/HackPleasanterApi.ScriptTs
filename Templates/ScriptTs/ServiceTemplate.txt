@@ -18,7 +18,10 @@
   string ExtensionElementsClassName = ModelClassName + "ExtensionElements"; 
 
 }
-export class @Raw(TargetClassName) extends APIServiceBase<  @Raw(ModelClassName)  > {
+
+import { @Raw(ModelClassName) } from "../Models/@Raw(ModelClassName)";
+
+export class @Raw(TargetClassName) extends HackPleasanterApi_ServiceBase<  @Raw(ModelClassName)  > {
 
   // 対象としているサイトITを取得する
   override getSiteId(): number {
