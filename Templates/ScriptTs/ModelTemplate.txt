@@ -10,6 +10,9 @@
 
 export class @Raw(TargetClassName) {
   public constructor(public _rawData: ResponseDataItems) {
+    // if( null == _rawData ) {
+    //   this._rawData = {}
+    // }
   }
 
             @* ClassHashの出力定義 *@
@@ -62,11 +65,11 @@ export class @Raw(TargetClassName) {
             }
 
 
-            @* DateHashの出力定義 *@
+            @* DateHashの出力定義(生データ参照用) *@
             @foreach (var item in Model.ClassifiedInterface.DateHash) {
 
 <text>
-                    get </text> @Raw(item.VariableName) <text> (): string
+                    get </text> @Raw(item.VariableName)<text>_raw (): string
                     {
                         </text>
                         <text>
@@ -76,7 +79,7 @@ export class @Raw(TargetClassName) {
 
 <text>
 
-                    set </text> @Raw(item.VariableName) <text> (value: string) {
+                    set </text> @Raw(item.VariableName)<text>_raw (value: string) {
 
                                                 </text>
                         <text>
@@ -85,6 +88,37 @@ export class @Raw(TargetClassName) {
                             </text>
 
             }
+
+            @* DateHashの出力定義(PleasanterDateラッピング用) *@
+            @foreach (var item in Model.ClassifiedInterface.DateHash) {
+
+<text>
+                    get </text> @Raw(item.VariableName)<text> (): PleasanterDate | null
+                    {
+                        </text>
+                        <text>
+                        const const data =  this._rawData?.@(item.ColumnName);
+                        if (null !== data) {
+                        return new PleasanterDate(data);
+                        }
+
+                        return null;
+
+                    }
+                    </text>
+
+<text>
+
+                    set </text> @Raw(item.VariableName)<text> (value: string) {
+
+                                                </text>
+                        <text>
+                            if (null !== value) this._rawData.@(item.ColumnName) = value.getPleasanterDateString();
+                    }
+                            </text>
+
+            }
+
 
                         @* CheckHash *@
             @foreach (var item in Model.ClassifiedInterface.CheckHash) {

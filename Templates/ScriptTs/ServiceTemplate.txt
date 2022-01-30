@@ -20,6 +20,10 @@
 }
 export class @Raw(TargetClassName) extends APIServiceBase<  @Raw(ModelClassName)  > {
 
+  // 対象としているサイトITを取得する
+  override getSiteId(): number {
+    return @(Model.SiteDefinition.SiteId);
+  }
 
   override makeItemType(_rawData: ResponseDataItems):  @Raw(ModelClassName) {
     return new  @Raw(ModelClassName) (_rawData);
