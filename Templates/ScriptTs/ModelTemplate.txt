@@ -147,3 +147,55 @@ export class @Raw(TargetClassName) {
 
 }
 
+
+            @* ClassHashの出力定義 *@
+            @foreach (var item in Model.ClassifiedInterface.ClassHash) {
+
+<text>
+                // 項目の検索選択肢
+                export const enum @Raw(item.VariableName)_Choices 
+                {
+</text>
+
+                @foreach (var chItem in item?.ChoicesTextInfos) {
+                    <text>
+                    // @Raw(chItem.Description)
+                         @Raw(chItem.VariableName) ="@Raw(chItem.Value)",
+                    </text>
+                
+                }
+<text>
+                }
+                </text>
+
+
+<text>
+                // 項目の検索選択肢
+                export function toString_@Raw(item.VariableName) ( value : </text> @Raw(item.VariableName)<text>_Choices )
+                {
+
+
+                    switch( value ){
+
+</text>
+                @foreach (var chItem in item?.ChoicesTextInfos) {
+<text>
+                        case @Raw(item.VariableName)_Choices . @Raw(chItem.VariableName):
+                            {
+                                return "@Raw(chItem.Description)";
+                            }
+</text>
+                }
+
+<text>
+
+                    }
+
+                    return "Error";
+
+                }
+
+                </text>
+
+
+            }
